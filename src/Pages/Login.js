@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
 function Login() {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
 
-  const submitdata = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submitdata = (e) => {
+    e.preventDefault();
     if (username == "" || password == "") {
       console.log("No values");
 
@@ -19,7 +21,7 @@ function Login() {
     <div>
       <h2>Login</h2>
       <div>
-        <form onSubmit={submitdata}>
+        <form onSubmit={(e) => submitdata(e)}>
           <div>
             <label>Enter your Username</label>
             <input
