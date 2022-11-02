@@ -1,12 +1,19 @@
 import './App.css';
 import Login from './Pages/Login';
-import { Outlet } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./Pages/Home";
+import UserRegistration from "./Pages/UserRegistration";
 
 function App() {
   return (
     <div className="App flex h-screen justify-center items-center">
-      <Login/>
-      <Outlet />
+  <BrowserRouter>
+    <Routes>
+      <Route exact path="/" element={<Login/>} />
+      <Route path="home" element={<Home/>} />
+      <Route path="add-user" element={<UserRegistration/>} />
+    </Routes>
+  </BrowserRouter>
     </div>
   );
 }
