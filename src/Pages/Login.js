@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { loginUser } from "../services/http.service";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -11,8 +12,11 @@ function Login() {
 
       return;
     } else {
-      console.log(username);
-      console.log(password);
+      const data ={
+        "username": username,
+        "password": password
+      }
+      loginUser(data)
     }
   };
 

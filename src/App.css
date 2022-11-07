@@ -6,6 +6,10 @@
     background-color: white;
     color: black;
   }
+
+  input{
+    color: black;
+  }
   
   .dropdown-header {
     padding: 7px;
