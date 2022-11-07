@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { addUser } from "../services/http.service";
 
 function UserRegistration() {
   const [username, setUsername] = useState("");
@@ -14,15 +14,15 @@ function UserRegistration() {
     { id: "Worker", value: "Worker" },
   ];
 
-  console.log('type');
+  console.log("type");
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
   const setUserType = (value) => {
     setIsOpen(false);
-    setType(value)
-  }
+    setType(value);
+  };
 
   const submitUserData = (e) => {
     e.preventDefault();
@@ -31,8 +31,14 @@ function UserRegistration() {
 
       return;
     } else {
-      console.log(username);
-      console.log(password);
+      const data = {
+        "username": username,
+        "password": password,
+        "email": email,
+        "type": type,
+      };
+
+      addUser(data)
     }
   };
 
@@ -88,7 +94,6 @@ function UserRegistration() {
               {type
                 ? userTypes.find((item) => item.value === type).id
                 : "Select User Type"}
-              
             </div>
             <div className={`dropdown-body ${isOpen && "open"}`}>
               {userTypes.map((item) => (
@@ -101,8 +106,7 @@ function UserRegistration() {
                     className={`dropdown-item-dot ${
                       item.value === type && "selected"
                     }`}
-                  >
-                  </span>
+                  ></span>
                   {item.value}
                 </div>
               ))}
