@@ -1,15 +1,15 @@
 import axios from "axios";
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InR5cGUiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW54IiwicGFzc3dvcmQiOiIkMmIkMTAkZzFPTDNIOUJhV2o5QkpiNXJ4WXBhLm9oazBxNzVQUENuaVBTZk1COHcwU2JZTWJJYkN2TVciLCJlbWFpbCI6ImFkbWlueEBnbWFpbC5jb20ifSwiaWF0IjoxNjY3ODQ0Mjg2LCJleHAiOjE2Njc4NDUxODZ9.UpVQ2u4P-IgOo9gYpotU7Rd-2ZhRYFOIbXYQLXggPYs";
 export async function loginUser(data) {
   try {
     const responce = await axios.post(
       "http://localhost:5000/userRoute/login",
       data
     );
-    if(responce.data.accessToken){
-      // localStorage.setItem('user')
+    if (responce.data.accessToken) {
+      localStorage.setItem("token", responce.data.accessToken);
+      localStorage.setItem("user", responce.data.user.username);
+      localStorage.setItem("type", responce.data.user.type);
     }
     console.log(responce.data);
 
@@ -26,7 +26,7 @@ export async function addUser(data) {
       data,
       {
         headers: {
-          Authorization: `Basic ${token}`,
+          Authorization: `bearer ${localStorage.getItem("token")}`,
         },
       }
     );

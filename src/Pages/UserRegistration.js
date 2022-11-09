@@ -43,7 +43,6 @@ function UserRegistration() {
 
   return (
     <div className="w-full md:w-1/2 text-white">
-      <Navbar />
       <div className="bg-jet  text-center px-1 md:px-4 py-2 m-auto rounded relative">
         <h2 className="text-2xl mb-5">User registrtion</h2>
         <form onSubmit={(e) => submitUserData(e)}>
