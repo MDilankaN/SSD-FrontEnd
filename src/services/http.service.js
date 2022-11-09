@@ -8,8 +8,12 @@ export async function loginUser(data) {
       "http://localhost:5000/userRoute/login",
       data
     );
+    if(responce.data.accessToken){
+      // localStorage.setItem('user')
+    }
+    console.log(responce.data);
 
-    return responce;
+    return responce.data;
   } catch (e) {
     console.log(e);
   }

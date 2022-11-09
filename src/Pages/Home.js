@@ -3,7 +3,7 @@ import Navbar from "../component/Navbar";
 
 function Home() {
   const [message, setMessage] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState('');
 
   const submitMsg = (e) => {
     e.preventDefault();

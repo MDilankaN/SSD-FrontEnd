@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { loginUser } from "../services/http.service";
 import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({setisLoggedIn}) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -19,8 +19,10 @@ function Login() {
         "password": password
       }
       const res = await loginUser(data)
-      if (res.data.accesssToken) {
+      if (res.accessToken) {
+        setisLoggedIn(true)
         return navigate('home');
+
       } else {
         console.log(res.data);
       }
