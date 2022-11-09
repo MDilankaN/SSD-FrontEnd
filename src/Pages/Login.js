@@ -1,18 +1,31 @@
 import React, { useState } from "react";
+import { loginUser } from "../services/http.service";
+import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({setisLoggedIn}) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitdata = (e) => {
+  const submitdata = async (e) => {
     e.preventDefault();
     if (username === "" || password === "") {
       console.log("No values");
 
       return;
     } else {
-      console.log(username);
-      console.log(password);
+      const data ={
+        "username": username,
+        "password": password
+      }
+      const res = await loginUser(data)
+      if (res.accessToken) {
+        setisLoggedIn(true)
+        return navigate('home');
+
+      } else {
+        console.log(res.data);
+      }
     }
   };
 
