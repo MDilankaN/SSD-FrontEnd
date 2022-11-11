@@ -53,3 +53,21 @@ export async function addMessage(data) {
     console.log(e);
   }
 }
+
+// add file
+export async function addFile(data) {
+  try {
+    const responce = await axios.post(
+      "http://localhost:5000/fileRoute/fileAdd",
+      data,
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      }
+    );
+    console.log(responce);
+  } catch (e) {
+    console.log(e);
+  }
+}
