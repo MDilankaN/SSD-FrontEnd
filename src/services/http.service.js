@@ -35,3 +35,21 @@ export async function addUser(data) {
     console.log(e);
   }
 }
+
+//add message
+export async function addUser(data) {
+  try {
+    const responce = await axios.post(
+      "http://localhost:5000/userRoute/register",
+      data,
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      }
+    );
+    console.log(responce);
+  } catch (e) {
+    console.log(e);
+  }
+}
