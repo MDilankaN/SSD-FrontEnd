@@ -22,7 +22,7 @@ export async function loginUser(data) {
 export async function addUser(data) {
   try {
     const responce = await axios.post(
-      "http://localhost:5000/userRoute/register",
+      "http://localhost:5000/ruserRoute/registe",
       data,
       {
         headers: {
@@ -37,10 +37,10 @@ export async function addUser(data) {
 }
 
 //add message
-export async function addUser(data) {
+export async function addMessage(data) {
   try {
     const responce = await axios.post(
-      "http://localhost:5000/userRoute/register",
+      "http://localhost:5000/messageRoute/sendmessage",
       data,
       {
         headers: {
