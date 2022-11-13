@@ -22,7 +22,43 @@ export async function loginUser(data) {
 export async function addUser(data) {
   try {
     const responce = await axios.post(
-      "http://localhost:5000/userRoute/register",
+      "http://localhost:5000/ruserRoute/registe",
+      data,
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      }
+    );
+    console.log(responce);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+//add message
+export async function addMessage(data) {
+  try {
+    const responce = await axios.post(
+      "http://localhost:5000/messageRoute/sendmessage",
+      data,
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      }
+    );
+    console.log(responce);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+// add file
+export async function addFile(data) {
+  try {
+    const responce = await axios.post(
+      "http://localhost:5000/fileRoute/fileAdd",
       data,
       {
         headers: {
