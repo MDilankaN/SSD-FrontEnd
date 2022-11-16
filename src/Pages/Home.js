@@ -1,27 +1,41 @@
 import React, { useState } from "react";
 import Navbar from "../component/Navbar";
+import { addFile, addMessage } from "../services/http.service";
 
 function Home() {
   const [message, setMessage] = useState("");
-  const [selectedFile, setSelectedFile] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const submitMsg = (e) => {
+  const submitMsg = async (e) => {
     e.preventDefault();
     if (message === "") {
       console.log("No values");
       return;
     } else {
-      console.log(message);
+      await addMessage(message);
     }
   };
 
-  const submitfile = (e) => {
+  const setSelectedFileMethod = (e) => {
     e.preventDefault();
-    if (selectedFile === null) {
+    if (!e.target.files) {
+      return;
+    }
+
+    setSelectedFile(e.target.files[0]);
+  }
+
+  const submitfile = async (e) => {
+    e.preventDefault();
+    console.log();
+    if (selectedFile === null || selectedFile === undefined) {
       console.log("No values");
       return;
     } else {
-      console.log(selectedFile);
+      let formData = new FormData();
+      formData.append("file", selectedFile);
+      console.log(formData);
+      await addFile(formData);
     }
   };
   return (
@@ -52,14 +66,13 @@ function Home() {
         <div className="bg-jet rounded mt-1 py-2">
           <h2 className="text-2xl mb-5">Upload file</h2>
 
-          <form onSubmit={(e) => submitfile(e)}>
+          <form onSubmit={(e) => submitfile(e)} id='file-form'>
             <div className="flex flex-col">
               <label className="m-1">Enter your Messgae</label>
               <input
                 className="my-1 mx-auto px-2 w-4/5 py-1 rounded text-white bg-web-gray"
                 type="file"
-                value={selectedFile}
-                onChange={(e) => setSelectedFile(e.target.value)}
+                onChange={setSelectedFileMethod}
               />
               <label className="m-1"></label>
             </div>

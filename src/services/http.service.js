@@ -28,7 +28,7 @@ export async function addUser(data) {
       data,
       {
         headers: {
-          Authorization: `Basic ${token}`,
+          Authorization: `bearer ${localStorage.getItem("token")}`,
         },
       }
     );
@@ -39,14 +39,19 @@ export async function addUser(data) {
 }
 
 //add message
-export async function addMessage(data) {
+export async function addMessage(message) {
+
+  var data = {
+    "username": localStorage.getItem("user"),
+    "message": message
+  }
   try {
     const responce = await axios.post(
       "https://localhost:5000/messageRoute/sendmessage",
       data,
       {
         headers: {
-          Authorization: `Basic ${token}`,
+          Authorization: `bearer ${localStorage.getItem("token")}`,
         },
       }
     );
@@ -57,14 +62,16 @@ export async function addMessage(data) {
 }
 
 // add file
-export async function addFile(data) {
+export async function addFile(formData) {
   try {
+
     const responce = await axios.post(
-      "https://localhost:5000/fileRoute/fileAdd",
-      data,
+      "https://localhost:5000/fileUploadRoute/fileAdd",
+      formData,
       {
         headers: {
           Authorization: `bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
         },
       }
     );
