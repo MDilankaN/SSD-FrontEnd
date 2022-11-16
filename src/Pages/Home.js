@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../component/Navbar";
 import { addFile, addMessage } from "../services/http.service";
 
 function Home() {
   const [message, setMessage] = useState("");
+  const [user, setUser] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+
+  useEffect(() => {
+    setUser(localStorage.getItem("type"));
+  }, [])
+  
 
   const submitMsg = async (e) => {
     e.preventDefault();
@@ -62,7 +68,7 @@ function Home() {
         </form>
       </div>
 
-      {localStorage.getItem("type") === "Manager" || localStorage.getItem("type") === "admin"&& (
+      {(user === "Manager" || user === "admin") && (
         <div className="bg-jet rounded mt-1 py-2">
           <h2 className="text-2xl mb-5">Upload file</h2>
 
