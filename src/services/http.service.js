@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import CryptoJS from 'crypto-js';
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InR5cGUiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW54IiwicGFzc3dvcmQiOiIkMmIkMTAkZzFPTDNIOUJhV2o5QkpiNXJ4WXBhLm9oazBxNzVQUENuaVBTZk1COHcwU2JZTWJJYkN2TVciLCJlbWFpbCI6ImFkbWlueEBnbWFpbC5jb20ifSwiaWF0IjoxNjY3ODQ0Mjg2LCJleHAiOjE2Njc4NDUxODZ9.UpVQ2u4P-IgOo9gYpotU7Rd-2ZhRYFOIbXYQLXggPYs";
 export async function loginUser(data) {
@@ -41,9 +41,13 @@ export async function addUser(data) {
 //add message
 export async function addMessage(message) {
 
+  //encrypt the message
+  const encrypt = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(message));
+  console.log("ENCRYPT", encrypt);
+  //create son object and send as API Call
   var data = {
     "username": localStorage.getItem("user"),
-    "message": message
+    "message": encrypt
   }
   try {
     const responce = await axios.post(

@@ -15,7 +15,8 @@ function Home() {
   const submitMsg = async (e) => {
     e.preventDefault();
     if (message === "") {
-      console.log("No values");
+      console.log("No values")
+      alert("No values")
       return;
     } else {
       await addMessage(message);
