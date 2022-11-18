@@ -11,6 +11,7 @@ export async function loginUser(data) {
     if (responce.data.accessToken) {
       localStorage.setItem("token", responce.data.accessToken);
       localStorage.setItem("user", responce.data.user.username);
+      localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("type", responce.data.user.type);
       alert("successful login");
     } else {
