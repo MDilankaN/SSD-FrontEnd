@@ -12,9 +12,12 @@ export async function loginUser(data) {
       localStorage.setItem("token", responce.data.accessToken);
       localStorage.setItem("user", responce.data.user.username);
       localStorage.setItem("type", responce.data.user.type);
+      alert('successful login')
+    } else {
+      alert('Login Failed')
     }
     console.log(responce.data);
-    alert('successful login')
+
     return responce.data;
   } catch (e) {
     console.log(e);
