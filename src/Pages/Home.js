@@ -20,6 +20,7 @@ function Home() {
       return;
     } else {
       await addMessage(message);
+      setMessage("")
     }
   };
 

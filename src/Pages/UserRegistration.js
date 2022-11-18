@@ -105,7 +105,11 @@ function UserRegistration() {
         email: email,
         type: type,
       };
-      addUser(data); 
+      addUser(data);
+      setEmail("")
+      setUsername("")
+      setPassword("")
+      setRePassword("")
       NotificationManager.success('', 'Sucess!', 2000); 
     }
   };
@@ -144,7 +148,7 @@ function UserRegistration() {
             <label className="m-1">Enter your Password</label>
             <input
               className="my-1 mx-auto px-2 w-4/5 py-1 rounded"
-              type="text"
+              type="password"
               value={password}
               onChange={(e) => {setPassword(e.target.value); checkValidation()}}
               onBlur={checkValidation}
@@ -156,7 +160,7 @@ function UserRegistration() {
             <label className="m-1">Enter your Re Password</label>
             <input
               className="my-1 mx-auto px-2 w-4/5 py-1 rounded"
-              type="text"
+              type="password"
               value={repassword}
               onChange={(e) =>  {setRePassword(e.target.value); checkValidation()}}
               onBlur={checkValidation}

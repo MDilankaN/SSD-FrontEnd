@@ -14,7 +14,7 @@ export async function loginUser(data) {
       localStorage.setItem("type", responce.data.user.type);
     }
     console.log(responce.data);
-
+    alert('successful login')
     return responce.data;
   } catch (e) {
     console.log(e);
@@ -33,7 +33,9 @@ export async function addUser(data) {
       }
     );
     console.log(responce);
+    alert("user added successfully")
   } catch (e) {
+    alert("unsuccesful")
     console.log(e);
   }
 }
@@ -59,8 +61,10 @@ export async function addMessage(message) {
         },
       }
     );
+    alert("message sent successfully")
     console.log(responce);
   } catch (e) {
+    alert("unsuccessful")
     console.log(e);
   }
 }
@@ -79,8 +83,10 @@ export async function addFile(formData) {
         },
       }
     );
+    alert("file sent successfully")
     console.log(responce);
   } catch (e) {
+    alert("unsuccessful")
     console.log(e);
   }
 }
