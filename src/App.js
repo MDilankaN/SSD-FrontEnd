@@ -8,13 +8,14 @@ import Protected from "./services/Protected";
 import Navbar from "./component/Navbar";
 
 function App() {
-  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [isLoggedIn, setisLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn")
+  );
   return (
     <div className="App flex flex-col h-screen justify-center items-center">
       <BrowserRouter>
-      <Navbar setisLoggedIn={setisLoggedIn} isLoggedIn={isLoggedIn}/>
+        <Navbar setisLoggedIn={setisLoggedIn} isLoggedIn={isLoggedIn} />
         <Routes>
-
           <Route
             exact
             path="/"

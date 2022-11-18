@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import { addUser } from "../services/http.service";
-import 'react-notifications/lib/notifications.css'; 
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import "react-notifications/lib/notifications.css";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 function UserRegistration() {
   const [username, setUsername] = useState("");
@@ -12,71 +15,11 @@ function UserRegistration() {
   const [type, setType] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  const [validation, setValidation] = useState({
-    username: "",
-    email: "",
-    password: "",
-    repassword: "",
-    type: "",
-  });
-
-  const checkValidation = () => {
-    console.log('running');
-    let errors = validation;
-
-    //first Name validation
-    if (username.trim() === '') {
-      errors.username = "Username is required";
-    } else if (username.trim() !== '') {
-      errors.username = "";
-    }
-    //type validation
-    if (type.trim() === '') {
-      errors.type = "User type is required";
-    } else if (type.trim() !== ''){
-      errors.type = "";
-    }
-
-    // email validation
-
-    // if (email.trim() === '') {
-    //   errors.email = "Email is required";
-    // } else if (email.trim() !== ''){
-    //   errors.email = "";
-    // } 
-     
-    if (email.trim() === '') {
-      errors.email = "Email is required";
-    }  
-    else {
-      errors.email = "";
-    } 
- 
-    // const password = password;
-    if (password.trim() === '') {
-      errors.password = "Password is required";
-    } else if (password.trim().length < 5) {
-      errors.password = "Password must be longer than 5 characters";
-    } else if (password.trim().length >= 20) {
-      errors.password = "Password must shorter than 20 characters";
-    } else {
-      errors.password = "";
-    }
-
-    //matchPassword validation
-    if (repassword.trim() === '') {
-      errors.repassword = "Password confirmation is required";
-    } else if (repassword.trim() !== password.trim()) {
-      errors.repassword = "Password does not match confirmation password";
-    } else if (repassword.trim() === password.trim()) {
-      errors.repassword = "";
-    }
-    setValidation(errors);
-  };
-
-  useEffect(() => {
-    checkValidation();
-  }, [username, email, password, repassword, type]);
+  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [repasswordError, setRePasswordError] = useState("");
+  const [typeError, setTypeError] = useState("");
 
   const userTypes = [
     { id: "Manager", value: "Manager" },
@@ -91,32 +34,71 @@ function UserRegistration() {
     setType(value);
   };
 
-  const submitUserData = (e) => {
-    e.preventDefault(); 
-    checkValidation();  
-    if (validation.username !== "" || validation.email !== "" || validation.password !== "" || validation.repassword !== "" || validation.type !== "") {
-      // console.log("Invalid"); 
-      NotificationManager.error('Invalid inputs', 'Warning!', 2000); 
-      return;
+  const submitUserData = async (e) => {
+    e.preventDefault();
+
+    if (username.trim() === "") {
+      setUsernameError("Username is required");
     } else {
+      setUsernameError("");
+    }
+
+    if (email.trim() === "") {
+      setEmailError("Email is required");
+    } else {
+      setEmailError("");
+    }
+    if (password.trim() === "") {
+      setPasswordError("Password is required");
+    } else {
+      setPasswordError("");
+    }
+
+    if (repassword.trim() === "") {
+      setRePasswordError("Re-password is required");
+    } else {
+      setRePasswordError("");
+    }
+
+    if (type.trim() === "") {
+      setTypeError("Type is required");
+    } else {
+      setTypeError("");
+    }
+
+    if (
+      username !== "" &&
+      email !== "" &&
+      password !== "" &&
+      password === repassword &&
+      type !== ""
+    ) {
       const data = {
         username: username,
         password: password,
         email: email,
         type: type,
       };
-      addUser(data);
-      setEmail("")
-      setUsername("")
-      setPassword("")
-      setRePassword("")
-      NotificationManager.success('', 'Sucess!', 2000); 
+      const responce = await addUser(data);
+      setEmail("");
+      setUsername("");
+      setPassword("");
+      setRePassword("");
+      setType("");
+
+      setUsernameError("");
+      setTypeError("");
+      setEmailError("");
+      setPasswordError("");
+      setRePasswordError("");
+    } else {
+      setRePasswordError("Re-password is not match with Password");
     }
   };
 
   return (
     <div className="w-full md:w-1/2 text-white">
-    <NotificationContainer/>
+      <NotificationContainer />
       <div className="bg-jet  text-center px-1 md:px-4 py-2 m-auto rounded relative">
         <h2 className="text-2xl mb-5">User registrtion</h2>
         <form onSubmit={(e) => submitUserData(e)}>
@@ -126,10 +108,13 @@ function UserRegistration() {
               className="my-1 mx-auto px-2 w-4/5 py-1 rounded"
               type="text"
               value={username}
-              onChange={(e) => {setUsername(e.target.value); checkValidation()}}
-              onBlur={checkValidation}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
             />
-            {validation.username && <span style={{ color: 'red' }}>{validation.username}</span>}
+            {usernameError && (
+              <span style={{ color: "red" }}>{usernameError}</span>
+            )}
             <label className="m-1"></label>
           </div>
           <div className="flex flex-col">
@@ -138,10 +123,11 @@ function UserRegistration() {
               className="my-1 mx-auto px-2 w-4/5 py-1 rounded"
               type="text"
               value={email}
-              onChange={(e) => {setEmail(e.target.value); checkValidation()}}
-              onBlur={checkValidation}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
-            {validation.email && <span style={{ color: 'red' }}>{validation.email}</span>}
+            {emailError && <span style={{ color: "red" }}>{emailError}</span>}
             <label className="m-1"></label>
           </div>
           <div className="flex flex-col">
@@ -150,10 +136,13 @@ function UserRegistration() {
               className="my-1 mx-auto px-2 w-4/5 py-1 rounded"
               type="password"
               value={password}
-              onChange={(e) => {setPassword(e.target.value); checkValidation()}}
-              onBlur={checkValidation}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
-            {validation.password && <span style={{ color: 'red' }}>{validation.password}</span>}
+            {passwordError && (
+              <span style={{ color: "red" }}>{passwordError}</span>
+            )}
             <label className="m-1"></label>
           </div>
           <div className="flex flex-col">
@@ -162,10 +151,13 @@ function UserRegistration() {
               className="my-1 mx-auto px-2 w-4/5 py-1 rounded"
               type="password"
               value={repassword}
-              onChange={(e) =>  {setRePassword(e.target.value); checkValidation()}}
-              onBlur={checkValidation}
+              onChange={(e) => {
+                setRePassword(e.target.value);
+              }}
             />
-            {validation.repassword && <span style={{ color: 'red' }}>{validation.repassword}</span>}
+            {repasswordError && (
+              <span style={{ color: "red" }}>{repasswordError}</span>
+            )}
             <label className="m-1"></label>
           </div>
           <div className="flex flex-col">
@@ -181,8 +173,9 @@ function UserRegistration() {
                 {userTypes.map((item) => (
                   <div
                     className="dropdown-item"
-                    onClick={(e) => {setUserType(e.target.id); checkValidation()}}
-                    onBlur={checkValidation}
+                    onClick={(e) => {
+                      setUserType(e.target.id);
+                    }}
                     id={item.value}
                   >
                     <span
@@ -195,7 +188,7 @@ function UserRegistration() {
                 ))}
               </div>
             </div>
-                {validation.type && <span style={{ color: 'red' }}>{validation.type}</span>}
+            {typeError && <span style={{ color: "red" }}>{typeError}</span>}
             <label className="m-1"></label>
           </div>
 
